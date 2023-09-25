@@ -9,6 +9,8 @@ const initialItems = [
 ];
 
 function App() {
+  const [list, setList] = useState([]);
+
   function Logo() {
     return <h1>🏄‍♀️ Far Away 🌴</h1>;
   }
@@ -20,13 +22,20 @@ function App() {
     function handleSubmit(e) {
       e.preventDefault();
 
-      if(!description) return
+      if (!description) return;
 
-      const newItem = { description, quantity, packed: false, id: Date.now() };
-      
-      setDescription('')
-      setQuantity(1)
+      const item = { description, quantity, packed: false, id: Date.now() };
+      handleAdd(item);
+      setDescription("");
+      setQuantity(1);
     }
+
+    function handleAdd(item) {
+      setList((prevList) => {
+        return [...prevList, item];
+      });
+    }
+
     function handleChange(e) {
       setDescription(e.target.value);
     }
@@ -51,22 +60,30 @@ function App() {
     );
   }
 
-  function Item({ item }) {
+  function Item({ item, deleteItem }) {
     return (
       <li>
         <span style={item.packed ? { textDecoration: "line-through" } : {}}>
           {item.quantity} {item.description}
         </span>
-        <button>❌</button>
+        <button onClick={() =>deleteItem(item.id)}>❌</button>
       </li>
     );
+  }
+
+  function deleteItem(id) {
+    setList((prevList) => {
+     return prevList.filter((item) => {
+        return item.id !== id;
+      });
+    });
   }
   function PackingList() {
     return (
       <div className="list">
         <ul>
-          {initialItems.map((item) => (
-            <Item item={item} key={item.id} />
+          {list.map((item) => (
+            <Item item={item} key={item.id} deleteItem={deleteItem} />
           ))}
         </ul>
       </div>
@@ -76,7 +93,7 @@ function App() {
     return (
       <footer className="stats">
         <em>
-          💼 You have x items on your list, and you already packed X (x%) 💼
+          💼 You have {list.length} items on your list, and you already packed X (x%) 💼
         </em>
       </footer>
     );
