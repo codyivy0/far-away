@@ -1,10 +1,10 @@
-import "./App.css";
+
 import React from "react";
 import { useState } from "react";
 import Logo from "./Logo";
 import Form from "./Form";
 import Stats from "./Stats";
-import PackingList from "./PackingList.2";
+import PackingList from "./PackingList";
 
 function App() {
   const [list, setList] = useState([]);
