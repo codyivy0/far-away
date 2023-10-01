@@ -9,6 +9,7 @@ export default function Stats({ list }) {
 
     const numPacked = list.filter((item) => item.packed).length;
     const percentage = Math.floor((numPacked / list.length) * 100);
+    
     return (
       <footer className="stats">
         <em>

@@ -7,6 +7,7 @@ export default function PackingList({
   onClear,
   deleteItem,
 }) {
+
   const [sortBy, setSortBy] = useState("input");
   let sortedItems;
 
@@ -21,7 +22,9 @@ export default function PackingList({
     sortedItems = list
       .slice()
       .sort((a, b) => Number(a.packed) - Number(b.packed));
-  return (
+  
+      return (
+
     <div className="list">
       <ul>
         {sortedItems.map((item) => (
